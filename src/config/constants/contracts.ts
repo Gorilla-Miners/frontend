@@ -4,7 +4,7 @@ export default {
     97: '0x8F3273Fb89B075b1645095ABaC6ed17B2d4Bc576',
   },
   staking: {
-    97: '0x5E0F72A61905Ac8965d51942fA2204E203877c8d',
+    97: '0x6626232B66d82b7Cf2B979384e28B601DF5d8415',
     56: '',
   },
 }
