@@ -56,7 +56,7 @@ export const fetchUserStaked = async (account) => {
   const result = await multicall(stakingABI, userDetailsCalls(account));
   const [info, reward] = result[0];
 
-  return new BigNumber(info.amount.toString()).toJSON()
+  return new BigNumber(info.amount.toString())
 }
 
 export const fetchUserDetails = async (account) => {
