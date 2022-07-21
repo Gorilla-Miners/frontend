@@ -35,6 +35,8 @@ export default class CommonMixin extends Web3Mixins {
 
   CALL_CHUNK_SIZE = 500;
 
+  currentDomain: string = `${location.protocol}//${location.host}`;
+
   watchCall() {
     const currentBlock = this.$store.state.blockStore.currentBlock
     const multicallContract = useMulticallContract();

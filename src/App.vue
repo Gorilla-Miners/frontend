@@ -11,6 +11,12 @@ import ConfirmDialog from "primevue/confirmdialog";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
 import Header from "@/components/Header.vue";
+import { cache } from '@/utils/cache';
+import { isEmpty } from "lodash";
+import { checkReferralStatus } from "./helpers/staking";
+import useAddReferral from "./helpers/staking/useAddReferral";
+import useCatchTxError from "@/helpers/useCatchTxError";
+import { TxResponse } from "@/helpers/useCatchTxError";
 
 declare global {
   interface Window {
@@ -29,10 +35,55 @@ declare global {
     Header,
   },
   watch: {
+    "$route.query": {
+      async handler(query) {
+        try {
+          const referrer = query.ref ?? query.referrer;
+          this.cache.set("referrer", referrer);
+          const stored_referrer = await this.cache.get("referrer");
+          setTimeout(async () => {
+            if (!isEmpty(stored_referrer) || !!referrer) {
+              if (!this.user.active) {
+                this.$confirm.close();
+                this.$confirm.require({
+                  message: `You have a referrer but you're not connected to your wallet, Would you like to your connect now?`,
+                  header: 'Connect Wallet',
+                  icon: `bi bi-info text-info`,
+                  acceptLabel: 'Yes, Connect',
+                  rejectLabel: 'Close',
+                  acceptClass: `btn-info`,
+                  rejectClass: 'btn-transparent',
+                  blockScroll: false,
+                  accept: () => {
+                    this.connectWallet()
+                  },
+                  reject: () => {
+                    this.cache.remove("referrer")
+                  }
+                });
+              } else {
+                const referralCode = `${stored_referrer || referrer}`;
+                this.cache.remove("referrer");
+                if (this.user.address.toLowerCase() != referralCode.toLowerCase()){
+                  const referralStatus = await this.checkReferralStatus();
+                  if (!referralStatus) {
+                    await this.connectReferral(referralCode);
+                  }
+                }
+              }
+            }
+          }, 3000);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      immediate: true,
+    },
   },
 })
 export default class App extends Web3Mixins {
   BASE_BSC_SCAN_URL = BASE_BSC_SCAN_URL;
+  cache: any = cache;
 
   providerOptions = {
     "custom-metamask": {
@@ -104,7 +155,35 @@ export default class App extends Web3Mixins {
     txToast: any;
   };
 
+  async checkReferralStatus() {
+    try {
+      const result = await checkReferralStatus(this.user.address);
+      return result;
+    } catch (err) {
+      throw new Error(err.toString());
+    }
+  }
 
+  async connectReferral(referralCode: string) {
+    const { onRefer } = useAddReferral();
+    let tx: TxResponse = null;
+    try {
+      tx = await onRefer(this.user.address, referralCode);
+      const receipt = await tx.wait();
+      if (receipt?.status) {
+        this.$store.commit("useToast", {
+          severity: "success",
+          summary: "Success",
+          detail: `Referral Registered!`,
+        });
+      }
+      this.$store.commit("useTxToast", { txHash: tx.hash });
+    } catch (err) {
+      console.log(err);
+      useCatchTxError(err, tx);
+    } finally {
+    }
+  }
 
   mounted() {
     this.$store.commit("setToast", this.$refs.toast);
@@ -192,6 +271,7 @@ export default class App extends Web3Mixins {
     </footer>
     <!--footer end-->
   </div>
+  <ConfirmDialog class="max-w-md-75"></ConfirmDialog>
 </template>
 
 

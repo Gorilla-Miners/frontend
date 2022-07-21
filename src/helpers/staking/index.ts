@@ -1,5 +1,8 @@
 import { fetchStakingAllowance, fetchUserBalances, fetchUserDetails, fetchUserStaked } from "@/store/modules/staking/fetchStakingData";
 import store from "@/store";
+import multicall from '@/utils/multicall';
+import stakingABI from '@/config/abis/staking.json';
+import stakingConfig from '@/config/constants/staking';
 import { watchEffect } from "vue";
 
 export const stakingWithUserDataLoadingSelector = () => {
@@ -39,6 +42,17 @@ export const updateUserStakingDetails = async (account: string) => {
   fields.map((field) => {
     store.commit("updateStakingUserData", { field: field, value: userStakingDetail[field] });
   })
+}
+
+export const checkReferralStatus = async (address) => {
+  const calls = [{
+    address: stakingConfig.contractAddress,
+    name: 'getReferrer',
+    params: [address]
+  }]
+  const zeroAddress = "0x0000000000000000000000000000000000000000";
+  const result = await multicall(stakingABI, calls);
+  return zeroAddress == result[0].referrer;
 }
 
 export const updateUserStakedBalance =

@@ -29,6 +29,35 @@ export default class Home extends CommonMixin {
     return getStakingAddress();
   }
 
+  get referralLink() {
+    return `${this.currentDomain}?ref=${this.user.address}`;
+  }
+
+  copy(content, title) {
+    if (!!content) {
+      const el = document.createElement('textarea');
+      el.value = content;
+      el.setAttribute('readonly', '');
+      // el.style = { display: 'none' };
+      document.body.appendChild(el);
+      el.select();
+      el.setSelectionRange(0, 99999); /*For mobile devices*/
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      this.$store.commit("useToast", {
+        severity: "info",
+        summary: "Copied",
+        detail: `Successfully copied (${title})`,
+      });
+
+    } else this.$store.commit("useToast", {
+      severity: "error",
+      summary: "Failed to Copy",
+      detail: `No data found!`,
+    });
+  }
+
   getLeadershipReward(leadershipPosition) {
     let earnings = 0;
     const leadershipProgram = [
@@ -100,16 +129,16 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main" v-if="stakingData">
                     <div class="rang-slider-toltip">
                       <span>Number of participates <strong>{{
-                      stakingData.totalParticipants
-                      }}</strong></span>
+                          stakingData.totalParticipants
+                          }}</strong></span>
                       <span>Total Payout<strong>${{ getFormattedBalance(getBalanceNumber(stakingData.totalPayouts,
-                      18))
-                      }}</strong></span>
+                          18))
+                          }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
                       <span v-if="stakingData.totalInvestments">Total BUSD in Contract <strong style=" font-size:
                         30px">${{ getFormattedBalance(getBalanceNumber(stakingData.contractBalance, 18))
-                        }}</strong></span>
+                          }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>
@@ -120,7 +149,7 @@ export default class Home extends CommonMixin {
         </div>
         <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
           <div class="pre-sale-timer-outer">
-            <div class="pre-sale-timer style-2">
+            <div class="pre-sale-timer style-2" style="display: block">
               <div class="row align-items-center">
                 <div class="col-md-6">
                   <h3>Start Mining <span>BUSD!</span></h3>
@@ -138,19 +167,19 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main">
                     <div class="rang-slider-toltip">
                       <span>You Have <strong>{{
-                      
-                      getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
-                      18))
-                      }}
+
+                          getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
+                          18))
+                          }}
                           BUSD</strong></span>
                       <span>Total Payout<strong>{{
-                      getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
-                      }}</strong></span>
+                          getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
+                          }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
                       <span>Leadership Reward <strong style=" font-size: 30px">{{
-                      getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
-                      }}</strong></span>
+                          getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
+                          }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>
@@ -159,6 +188,13 @@ export default class Home extends CommonMixin {
               <div v-if="userDataLoaded && stakingData.userData.amount.gt(0)" style="display: block">
                 <h6 class="mb-4 text-uppercase text-pr">Ends in:</h6>
                 <CountDown :countDownEndTime="stakingData.userData.lockEndTime" />
+              </div>
+              <div v-if="isWalletConnected" style="display: block" class="mt-5">
+                <h6 class="mb-4 text-uppercase text-pr">Referral Address</h6>
+                <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75">
+                  <span class="text-truncate mr-4">{{ referralLink }}</span>
+                  <span class="ml-auto px-3 copy-btn" @click="copy(`${referralLink}`, 'Referral Link')">COPY</span>
+                </div>
               </div>
             </div>
           </div>
@@ -297,3 +333,14 @@ export default class Home extends CommonMixin {
       style="margin-top: 60px; margin-bottom: 60px;margin-left: auto ; margin-right: auto" />
   </div>
 </template>
+<style lang="scss" scoped>
+.cover-ref {
+  background: #000;
+  color: #fff;
+  border-radius: 12px;
+
+  .copy-btn {
+    cursor: pointer;
+  }
+}
+</style>

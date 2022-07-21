@@ -4,6 +4,7 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import InputNumber from 'primevue/inputnumber';
+import ConfirmationService from 'primevue/confirmationservice';
 import Dialog from 'primevue/dialog';
 import router from './router'
 import './assets/index.scss';
@@ -16,7 +17,7 @@ app.config.globalProperties.emitter = emitter;
 
 app.use(router)
   .use(store)
-  .use(PrimeVue, { ripple: true })
+  .use(PrimeVue, { ripple: true }).use(ConfirmationService);
 
 app.component('Dialog', Dialog);
 app.component('Button', Button);
