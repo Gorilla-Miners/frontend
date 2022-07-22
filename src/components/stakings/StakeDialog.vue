@@ -171,7 +171,6 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
       }
       this.$store.commit("useTxToast", { txHash: tx.hash });
     } catch (err) {
-      console.log(err);
       useCatchTxError(err, tx);
     } finally {
       this.pendingTx = false;

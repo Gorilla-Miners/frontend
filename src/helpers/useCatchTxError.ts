@@ -58,7 +58,7 @@ export default function useCatchTxError(error: any, tx: TxResponse) {
       handleNormalError(error);
     } else {
       provider
-        .call(tx, tx.blockNumber)
+        .call(error.receipt, error.receipt.blockNumber)
         .then(() => {
           handleNormalError(error, tx);
         })
