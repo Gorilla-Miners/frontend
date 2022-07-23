@@ -223,7 +223,7 @@ export default class Home extends CommonMixin {
 
         </div>
         <div class="col-sm-6 about-right order-first order-md-last">
-          <iframe width="100%" height="345" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+          <iframe width="100%" height="345" src="https://www.youtube.com/embed/u2e796JONEU">
           </iframe>
         </div>
       </div>
