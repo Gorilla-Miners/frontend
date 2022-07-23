@@ -49,7 +49,7 @@
         label=" Confirming..." />
       <Button v-else type="button" @click="handleConfirmClick" class="btn btn-block btn4 mt-3 w-100" :class="{
         'no-click':
-          !stakeAmount || parseFloat(stakeAmount) === 0 || userNotEnoughToken,
+          !stakeAmount || parseFloat(stakeAmount) <5 || userNotEnoughToken,
       }" label="Confirm" />
     </template>
   </Dialog>
