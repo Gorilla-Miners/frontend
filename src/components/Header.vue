@@ -29,7 +29,9 @@ export default class ConnectWalletButton extends Web3Mixins { }
                     soon</span></a></li>
               <li><a href="#about">Refferal</a></li>
               <li class="nav-btn"><a href="javascript:;" v-if="!isWalletConnected" @click="connectWallet()">Connect
-                  Wallet</a></li>
+                  Wallet</a>
+                <a href="javascript:;" v-else @click="$store.dispatch('resetApp')">Disconnect</a>
+              </li>
             </ul>
           </nav>
         </div>
