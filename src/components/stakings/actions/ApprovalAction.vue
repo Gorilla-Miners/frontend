@@ -3,7 +3,7 @@
     <Button v-if="pendingTx" :loading="pendingTx" type="button" class="btn btn-block btn4" label="Enabling..." />
     <Button v-else type="button" @click="handleApprove" class="btn btn-block btn4" :class="{
         'no-click': pendingTx,
-      }" label="Enable Staking" />
+      }" label="Enable Mining" />
   </template>
 </template>
 <script lang="ts">

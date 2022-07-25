@@ -10,7 +10,7 @@
     </div>
   </div>
   <Button v-else type="button" class="btn btn-block btn4" @click="onPresentStake"
-    :label="stakingTokenBalance.gt(0) ? 'Start Mining' : 'You have no BUSD'" />
+    :label="stakingTokenBalance.gt(0) ? 'Hire Miners' : 'You have no BUSD'" />
   <StakeDialog :stakingData="stakingData" :stakingTokenBalance="stakingTokenBalance" />
   <Dialog header="Withdraw" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
     :style="{ width: '520px' }" contentClass="d-flex flex-column" dismissableMask modal>
