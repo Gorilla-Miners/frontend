@@ -129,16 +129,16 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main" v-if="stakingData">
                     <div class="rang-slider-toltip">
                       <span>Number of participates <strong>{{
-                          stakingData.totalParticipants
-                          }}</strong></span>
+                      stakingData.totalParticipants
+                      }}</strong></span>
                       <span>Total Payout<strong>${{ getFormattedBalance(getBalanceNumber(stakingData.totalPayouts,
-                          18))
-                          }}</strong></span>
+                      18))
+                      }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
                       <span v-if="stakingData.totalInvestments">Total BUSD in Contract <strong style=" font-size:
                         30px">${{ getFormattedBalance(getBalanceNumber(stakingData.contractBalance, 18))
-                          }}</strong></span>
+                        }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>
@@ -167,19 +167,22 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main">
                     <div class="rang-slider-toltip">
                       <span>You Have <strong>{{
-
-                          getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
-                          18))
-                          }}
+                      
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
+                      18))
+                      }}
                           BUSD</strong></span>
                       <span>Total Payout<strong>{{
-                          getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
-                          }}</strong></span>
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
+                      }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
-                      <span>Leadership Reward <strong style=" font-size: 30px">{{
-                          getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
-                          }}</strong></span>
+                      <span>Leadership Reward <strong style="font-size: 30px; text-align: center">{{
+                      getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
+                      }}</strong></span>
+                      <span>Total Referrals <strong style=" font-size: 30px">{{
+                      stakingData.userData.totalReferrals
+                      }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>

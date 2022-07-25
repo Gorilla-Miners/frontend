@@ -33,10 +33,11 @@ export interface SerializedStaking {
   totalInvestments?: BigNumber
   totalParticipants?: string
   totalPayouts?: BigNumber
-  contractBalance?: BigNumber
+  contractBalance?: BigNumber;
   stakingDuration: string
   contractInitializedAt?: string
   userData?: {
+    totalReferrals: string;
     allowance: BigNumber
     currentLeadershipPosition: string
     balance: BigNumber
@@ -46,9 +47,9 @@ export interface SerializedStaking {
     totalWithdrawal: BigNumber
     reinvestmentDeadline: string
     lockEndTime: string
-    leadershipScore: BigNumber,
-    totalReward: BigNumber,
-    referralReward: BigNumber,
+    leadershipScore: BigNumber;
+    totalReward: BigNumber;
+    referralReward: BigNumber;
   }
 }
 
