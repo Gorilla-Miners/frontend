@@ -1,6 +1,58 @@
 <script lang="ts">
 import Web3Mixins from "../helpers/mixins/web3Mixin";
-export default class ConnectWalletButton extends Web3Mixins { }
+export default class ConnectWalletButton extends Web3Mixins {
+  window = {
+    width: 0,
+    height: 0
+  }
+
+  isNavShowing = false;
+
+  created() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
+  }
+
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize() {
+    this.window.width = window.innerWidth;
+    this.window.height = window.innerHeight;
+  }
+
+  menuClicked() {
+    if (this.window.width < 767) {
+      const menuIcon = document.querySelector('.menu-icon');
+      const navMenu = document.querySelector('nav');
+
+      if (!this.isNavShowing) {
+        menuIcon.classList.add('active');
+        navMenu.classList.add('nav-display');
+
+        for (const link of navMenu.querySelectorAll('a')) {
+          link.addEventListener('click', () => {
+            navMenu.classList.remove('nav-display')
+            menuIcon.classList.remove('active');
+          });
+        }
+      }else {
+        navMenu.classList.remove('nav-display')
+        menuIcon.classList.remove('active');
+      }
+
+      this.isNavShowing = !this.isNavShowing;
+    }
+  }
+
+  mounted() {
+    if (this.window.width < 767) {
+      const menuIcon = document.querySelector('.menu-icon');
+      console.log('Menu icon:::', menuIcon);
+    }
+  }
+}
 </script>
 
 <template>
@@ -15,7 +67,7 @@ export default class ConnectWalletButton extends Web3Mixins { }
           </a>
         </div>
         <div class="col-sm-6 col-md-8 main-menu">
-          <div class="menu-icon">
+          <div class="menu-icon" @click="menuClicked">
             <span class="top"></span>
             <span class="middle"></span>
             <span class="bottom"></span>
@@ -41,3 +93,8 @@ export default class ConnectWalletButton extends Web3Mixins { }
   <!--Header End-->
 
 </template>
+<style>
+.nav-display {
+  display: block;
+}
+</style>
