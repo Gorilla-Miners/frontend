@@ -39,6 +39,7 @@ const handleNormalError = (error, tx?: TxResponse) => {
       detail:
         'Please try again. Confirm the transaction and make sure you are paying enough gas!',
     });
+    store.commit("useTxToast", { txHash: tx.hash });
   } else {
     store.commit('toastError', {
       summary: 'Error',
