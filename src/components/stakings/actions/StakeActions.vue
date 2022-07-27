@@ -21,7 +21,7 @@
       </div>
     </div>
     <p>A fee of 2.5% will be applied for withdrawals</p>
-    <p>Withdrawing before the end of 90 days will result in a penalty of losing 50% of earnings(investment+ compounded
+    <p>Withdrawing before the end of 30 days will result in a penalty of losing 50% of earnings(investment+ compounded
       interest).</p>
     <template #footer>
       <Button v-if="pendingTx" :loading="pendingTx" type="button" class="btn btn-block btn4 mt-3 w-100"
