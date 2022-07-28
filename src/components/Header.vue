@@ -61,7 +61,7 @@ export default class ConnectWalletButton extends Web3Mixins {
     <div class="container">
       <div class="row" style=" display:flex; justify-items: center; align-items: center ">
         <div class="col-sm-6 col-md-4 logo">
-          <a href="cp-gold.html" title="Cp Gold">
+          <a href="/" title="Cp Gold">
             <img class="light" style="height: 70px ;" src="images/GorillaMiners.png" alt="Cp Gold">
             <img class="dark" style="height: 70px ;" src="images/GorillaMinersb.png" alt="Cp Gold">
           </a>
@@ -74,12 +74,12 @@ export default class ConnectWalletButton extends Web3Mixins {
           </div>
           <nav class="onepage">
             <ul>
-              <li class="active"><a href="#top">Home</a></li>
+              <li class="active"><a href="/#top">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a style=" display: flex; flex-direction: column" href="#token">Gorilla lottery<span
                     style=" text-align:center; font-size:10px; font-style:normal; margin-top: -6px">coming
                     soon</span></a></li>
-              <li><a href="#about">Refferal</a></li>
+              <li><router-link to="/referrals">Referral</router-link></li>
               <li class="nav-btn"><a href="javascript:;" v-if="!isWalletConnected" @click="connectWallet()">Connect
                   Wallet</a>
                 <a href="javascript:;" v-else @click="$store.dispatch('resetApp')">Disconnect</a>

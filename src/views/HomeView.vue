@@ -179,7 +179,7 @@ export default class Home extends CommonMixin {
                     </div>
                     <div class="rang-slider-total">
                       <span>Referral Bonus <strong style="font-size: 27px; text-align: center">{{
-                      getFormattedBalance(getBalanceNumber(stakingData.userData.referralCommission))
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.referralCommission, 18))
                       }}</strong></span>
                       <span>Total Referrals <strong style=" font-size: 27px">{{
                       stakingData.userData.totalReferrals
@@ -207,19 +207,19 @@ export default class Home extends CommonMixin {
                   <span class="mr-auto tbl-title">Leadership Reward:</span>
                   <span class="tbl-content">{{
                   getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
-                  }}</span>
+                  }} BUSD</span>
                 </div>
                 <div class="d-flex mb-3">
                   <span class="mr-auto tbl-title">Total Team Sales:</span>
                   <span class="tbl-content">{{
                   getFormattedBalance(getBalanceNumber(stakingData.userData.leadershipScore, 18))
-                  }}</span>
+                  }} BUSD</span>
                 </div>
                 <div class="d-flex mb-3">
                   <span class="mr-auto tbl-title">Daily Referral Earnings:</span>
                   <span class="tbl-content">{{
                     getFormattedBalance(getBalanceNumber(stakingData.userData.referralReward, 18))
-                  }}</span>
+                  }} BUSD</span>
                 </div>
               </div>
               <div v-if="userDataLoaded && stakingData.userData.amount.gt(0)" style="display: block" class="mt-4">
@@ -320,7 +320,7 @@ export default class Home extends CommonMixin {
               <img src="images/icon-5.png" alt="Strong teams & Advisors">
             </div>
             <div class="bf-details">
-              <h3>Bonus Refferal System</h3>
+              <h3>Bonus Referral System</h3>
               <p>You make 15% from the 3% daily earnings of all direct referral alone. This is intended to reward the
                 powerful leaders among us.</p>
             </div>
