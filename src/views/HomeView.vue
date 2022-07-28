@@ -216,7 +216,7 @@ export default class Home extends CommonMixin {
                   }}</span>
                 </div>
                 <div class="d-flex mb-3">
-                  <span class="mr-auto tbl-title">Daily Referral Eannigs:</span>
+                  <span class="mr-auto tbl-title">Daily Referral Earnings:</span>
                   <span class="tbl-content">{{
                     getFormattedBalance(getBalanceNumber(stakingData.userData.referralReward, 18))
                   }}</span>
