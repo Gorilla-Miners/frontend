@@ -50,6 +50,7 @@ export interface SerializedStaking {
     leadershipScore: BigNumber;
     totalReward: BigNumber;
     referralReward: BigNumber;
+    referralCommission: BigNumber;
   }
 }
 

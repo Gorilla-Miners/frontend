@@ -5,7 +5,7 @@
         <i class="bi bi-plus"></i> <span>add</span>
       </button>
       <button type="button" @click="onPresentUnstake" class="btn stake-btn ml-2">
-        <i class="bi bi-dash"></i>
+        <i class="bi bi-dash"></i> <span>Withdraw</span>
       </button>
     </div>
   </div>
@@ -15,7 +15,7 @@
   <Dialog header="Withdraw" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
     :style="{ width: '520px' }" contentClass="d-flex flex-column" dismissableMask modal>
     <div class="d-flex justify-content-between align-items-center mt-5 mb-5">
-      <div>Harvesting:</div>
+      <div>Withdraw:</div>
       <div class="d-flex flex-column">
         <h3>{{ formattedBalance }} BUSD</h3>
       </div>

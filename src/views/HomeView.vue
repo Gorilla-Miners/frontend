@@ -11,12 +11,14 @@ import CountDown from '@/components/CountDown.vue';
 import BigNumber from "bignumber.js";
 import { getBalanceNumber } from "@/utils/formatBalance";
 import CardActions from "@/components/stakings/actions/CardActions.vue";
+import HarvestAction from "@/components/stakings/actions/HarvestAction.vue";
 
 @Options({
   components: {
     Clock,
     CardActions,
     CountDown,
+    HarvestAction
   },
 })
 export default class Home extends CommonMixin {
@@ -126,13 +128,13 @@ export default class Home extends CommonMixin {
                       :href="`${BASE_BSC_SCAN_URL}/address/${contractAddress}`">View Contract</a></div>
                 </div>
                 <div class="col-md-6">
-                  <div class="rang-slider-main" v-if="stakingData">
+                  <div class="rang-slider-main mt-4 mt-md-0" v-if="stakingData">
                     <div class="rang-slider-toltip">
                       <span>Number of participates <strong>{{
-                          stakingData.totalParticipants
+                      stakingData.totalParticipants
                       }}</strong></span>
                       <span>Total Payout<strong>${{ getFormattedBalance(getBalanceNumber(stakingData.totalPayouts,
-                          18))
+                      18))
                       }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
@@ -158,41 +160,69 @@ export default class Home extends CommonMixin {
                       @click="connectWallet()">Connect wallet</a>
                   </div>
                   <div class="hero-right-btn" v-else>
+                    <HarvestAction v-if="userDataLoaded" :stakingData="stakingData" :isLoading="!userDataLoaded" />
                     <CardActions v-if="userDataLoaded" :stakingData="stakingData" :stakedBalance="
                       stakingData.userData.amount
                     " />
                   </div>
                 </div>
-                <div class="col-md-6" v-if="userDataLoaded">
+                <div class="col-md-6 mt-4 mt-md-0" v-if="userDataLoaded">
                   <div class="rang-slider-main">
                     <div class="rang-slider-toltip">
-                      <span>You Have <strong>{{
-                      
-                          getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
-                            18))
+                      <span>Total Deposit <strong>{{
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.amount, 18))
                       }}
                           BUSD</strong></span>
-                      <span>Total Withdrawal<strong>{{
-                          getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
+                      <span>Total Withdrawn<strong>{{
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.totalWithdrawal, 18))
                       }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
-                      <span>Leadership Reward <strong style="font-size: 30px; text-align: center">{{
-                          getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
+                      <span>Referral Bonus <strong style="font-size: 27px; text-align: center">{{
+                      getFormattedBalance(getBalanceNumber(stakingData.userData.referralCommission))
                       }}</strong></span>
-                      <span>Total Referrals <strong style=" font-size: 30px">{{
-                          stakingData.userData.totalReferrals
-                      }}</strong></span>
-                    </div>
-                    <div class="rang-slider-total">
-                      <span>Earnings <strong style="font-size: 30px; text-align: center">{{
-                          getFormattedBalance(getBalanceNumber(stakingData.userData.totalReward, 18))
+                      <span>Total Referrals <strong style=" font-size: 27px">{{
+                      stakingData.userData.totalReferrals
                       }}</strong></span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div v-if="userDataLoaded && stakingData.userData.amount.gt(0)" style="display: block">
+              <div class="d-flex flex-column details-table mt-4" v-if="userDataLoaded">
+                <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">You Have:</span>
+                  <span class="tbl-content">{{
+                  getFormattedBalance(getBalanceNumber(stakingData.userData.amount.plus(stakingData.userData.referralReward.plus(stakingData.userData.totalReward)),
+                  18))
+                  }}
+                    BUSD</span>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">Earnings:</span>
+                  <span class="tbl-content">{{
+                  getFormattedBalance(getBalanceNumber(stakingData.userData.totalReward, 18))
+                  }} BUSD</span>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">Leadership Reward:</span>
+                  <span class="tbl-content">{{
+                  getFormattedBalance(getLeadershipReward(stakingData.userData.currentLeadershipPosition))
+                  }}</span>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">Total Team Sales:</span>
+                  <span class="tbl-content">{{
+                  getFormattedBalance(getBalanceNumber(stakingData.userData.leadershipScore, 18))
+                  }}</span>
+                </div>
+                <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">Daily Referral Eannigs:</span>
+                  <span class="tbl-content">{{
+                    getFormattedBalance(getBalanceNumber(stakingData.userData.referralReward, 18))
+                  }}</span>
+                </div>
+              </div>
+              <div v-if="userDataLoaded && stakingData.userData.amount.gt(0)" style="display: block" class="mt-4">
                 <h6 class="mb-4 text-uppercase text-pr">Ends in:</h6>
                 <CountDown :countDownEndTime="stakingData.userData.lockEndTime" />
               </div>
@@ -341,6 +371,19 @@ export default class Home extends CommonMixin {
   </div>
 </template>
 <style lang="scss" scoped>
+.details-table {
+  .tbl-title {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .tbl-content {
+    text-align: right;
+    font-size: 22px;
+  }
+}
+
 .cover-ref {
   background: #000;
   color: #fff;
