@@ -296,6 +296,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "referralDebt",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "initialTime",
             "type": "uint256"
           },
@@ -668,6 +673,11 @@
       {
         "internalType": "uint256",
         "name": "debt",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "referralDebt",
         "type": "uint256"
       },
       {
