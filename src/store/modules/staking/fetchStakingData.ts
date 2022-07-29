@@ -76,6 +76,7 @@ export const fetchUserDetails = async (account) => {
   const totalReferralCommissions = result[3];
   return {
     totalReferrals: new BigNumber(referralsCount.toString()).toJSON(),
+    referralDebt: new BigNumber(info.referralDebt.toString()),
     currentLeadershipPosition: new BigNumber(info.currentLeadershipPosition.toString()).toJSON(),
     totalInvestments: new BigNumber(info.totalInvestments.toString()),
     amount: new BigNumber(info.amount.toString()),

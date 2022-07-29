@@ -95,7 +95,7 @@ export default class HarvestAction extends mixins(Vue.with(Props), CommonMixin) 
 
   mounted() {
     watchEffect(() => {
-      const stakingEarnings = this.stakingData.userData.totalReward.plus(this.stakingData.userData.referralReward)
+      const stakingEarnings = this.stakingData.userData.totalReward.plus(this.stakingData.userData.referralReward.plus(this.stakingData.userData.referralDebt))
       const earningTokenBalance = getBalanceNumber(
         stakingEarnings,
         18
