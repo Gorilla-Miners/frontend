@@ -40,6 +40,7 @@ export interface SerializedStaking {
     totalReferrals: string;
     allowance: BigNumber
     currentLeadershipPosition: string
+    referralDebt: BigNumber
     balance: BigNumber
     totalInvestments: BigNumber
     amount: BigNumber
@@ -50,6 +51,7 @@ export interface SerializedStaking {
     leadershipScore: BigNumber;
     totalReward: BigNumber;
     referralReward: BigNumber;
+    referralCommission: BigNumber;
   }
 }
 

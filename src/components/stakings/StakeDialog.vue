@@ -178,7 +178,7 @@ export default class StakeDialog extends mixins(Vue.with(Props), CommonMixin) {
   }
 
   getAnnualRoi(amount) {
-    const annualReward = ((amount * 3) / 100);
+    const annualReward = ((amount * 3) / 100) *30;
     return annualReward;
   }
 

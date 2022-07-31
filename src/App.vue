@@ -54,8 +54,21 @@ declare global {
                   acceptClass: `btn-info`,
                   rejectClass: 'btn-transparent',
                   blockScroll: false,
-                  accept: () => {
-                    this.connectWallet()
+                  accept: async () => {
+                    this.connectWallet();
+
+                    setTimeout(async () => {
+                      if (this.user.active) {
+                        const referralCode = `${stored_referrer || referrer}`;
+                        this.cache.remove("referrer");
+                        if (this.user.address.toLowerCase() != referralCode.toLowerCase()) {
+                          const referralStatus = await this.checkReferralStatus();
+                          if (!referralStatus) {
+                            await this.connectReferral(referralCode);
+                          }
+                        }
+                      }
+                    }, 4000)
                   },
                   reject: () => {
                     this.cache.remove("referrer")
@@ -180,6 +193,7 @@ export default class App extends Web3Mixins {
       this.$store.commit("useTxToast", { txHash: tx.hash });
     } catch (err) {
       console.log(err);
+      this.cache.remove("referrer");
       useCatchTxError(err, tx);
     } finally {
     }

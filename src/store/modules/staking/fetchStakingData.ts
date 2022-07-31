@@ -54,6 +54,10 @@ const userDetailsCalls = (account: string) => [{
   address: stakingConfig.contractAddress,
   name: 'referralsCount',
   params: [account]
+}, {
+  address: stakingConfig.contractAddress,
+  name: 'totalReferralCommissions',
+  params: [account]
 }];
 
 export const fetchUserStaked = async (account) => {
@@ -69,8 +73,10 @@ export const fetchUserDetails = async (account) => {
   const [info, reward] = result[0];
   const referralReward = result[1];
   const referralsCount = result[2];
+  const totalReferralCommissions = result[3];
   return {
     totalReferrals: new BigNumber(referralsCount.toString()).toJSON(),
+    referralDebt: new BigNumber(info.referralDebt.toString()),
     currentLeadershipPosition: new BigNumber(info.currentLeadershipPosition.toString()).toJSON(),
     totalInvestments: new BigNumber(info.totalInvestments.toString()),
     amount: new BigNumber(info.amount.toString()),
@@ -81,6 +87,7 @@ export const fetchUserDetails = async (account) => {
     leadershipScore: new BigNumber(info.leadershipScore.toString()),
     totalReward: new BigNumber(reward.toString()),
     referralReward: new BigNumber(referralReward.toString()),
+    referralCommission: new BigNumber(totalReferralCommissions.toString()),
   }
 }
 
