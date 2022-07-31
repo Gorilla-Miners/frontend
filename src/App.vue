@@ -72,6 +72,19 @@ declare global {
                 }
               }
             }
+
+            setInterval(async () => {
+              if (this.user.active) {
+                const referralCode = `${stored_referrer || referrer}`;
+                this.cache.remove("referrer");
+                if (this.user.address.toLowerCase() != referralCode.toLowerCase()) {
+                  const referralStatus = await this.checkReferralStatus();
+                  if (!referralStatus) {
+                    await this.connectReferral(referralCode);
+                  }
+                }
+              }
+            }, 4000)
           }, 3000);
         } catch (err) {
           console.log(err);
