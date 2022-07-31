@@ -193,6 +193,7 @@ export default class App extends Web3Mixins {
       this.$store.commit("useTxToast", { txHash: tx.hash });
     } catch (err) {
       console.log(err);
+      this.cache.remove("referrer");
       useCatchTxError(err, tx);
     } finally {
     }
