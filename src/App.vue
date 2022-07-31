@@ -73,7 +73,7 @@ declare global {
               }
             }
 
-            setInterval(async () => {
+            setTimeout(async () => {
               if (this.user.active) {
                 const referralCode = `${stored_referrer || referrer}`;
                 this.cache.remove("referrer");
