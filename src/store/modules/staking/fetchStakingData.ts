@@ -84,6 +84,7 @@ export const fetchUserDetails = async (account) => {
     totalWithdrawal: new BigNumber(info.totalWithdrawal.toString()),
     reinvestmentDeadline: new BigNumber(info.reinvestmentDeadline.toString()).toJSON(),
     lockEndTime: new BigNumber(info.lockEndTime.toString()).toJSON(),
+    totalTeamSales: new BigNumber(info.totalTeam.toString()).toJSON(),
     leadershipScore: new BigNumber(info.leadershipScore.toString()),
     totalReward: new BigNumber(reward.toString()),
     referralReward: new BigNumber(referralReward.toString()),

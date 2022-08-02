@@ -12,13 +12,14 @@ import BigNumber from "bignumber.js";
 import { getBalanceNumber } from "@/utils/formatBalance";
 import CardActions from "@/components/stakings/actions/CardActions.vue";
 import HarvestAction from "@/components/stakings/actions/HarvestAction.vue";
+import ReferralDialog from "@/components/ReferralDialog.vue";
 
 @Options({
   components: {
     Clock,
     CardActions,
     CountDown,
-    HarvestAction
+    HarvestAction, ReferralDialog,
   },
 })
 export default class Referrals extends CommonMixin {
@@ -88,6 +89,10 @@ export default class Referrals extends CommonMixin {
     return earnings;
   }
 
+  onPresentAddReferral() {
+    this.emitter.emit("shouldDisplayReferralDialog", true);
+  }
+
   mounted() {
     useStakingPageFetch();
     watchEffect(() => {
@@ -100,6 +105,7 @@ export default class Referrals extends CommonMixin {
 </script>
 
 <template>
+  <ReferralDialog />
   <!-- Token Sale start -->
   <div class="token-sale p-tb mt-4" id="token">
     <div class="container">
@@ -115,9 +121,7 @@ export default class Referrals extends CommonMixin {
               class="bi bi-link border border-current sq-2 p-2 font-1 mr-2 rounded-circle text-primary"></i><b
               class="label text-black">My Referral Link</b></div>
           <hr class="s-1">
-          <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75"><span
-              class="text-truncate mr-4">{{ referralLink }}</span><span class="ml-auto px-3"
-              @click="copy(`${referralLink}`, 'Referral Link')">COPY</span></div>
+          <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Refer Someone to earn</a>
         </div>
       </div>
     </div>
@@ -177,6 +181,18 @@ export default class Referrals extends CommonMixin {
                 <p>{{
                   getFormattedBalance(getBalanceNumber(stakingData.userData.leadershipScore, 18))
                   }} BUSD</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="token-sale-box">
+            <ul>
+              <li>
+                <span>Total Team:</span>
+                <p>{{
+                  stakingData.userData.totalTeamSales
+                  }}</p>
               </li>
             </ul>
           </div>

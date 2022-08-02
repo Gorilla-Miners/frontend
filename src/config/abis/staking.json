@@ -328,6 +328,11 @@
             "internalType": "uint256",
             "name": "leadershipScore",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalTeam",
+            "type": "uint256"
           }
         ],
         "internalType": "struct MinerProtocol.UserInfo",
@@ -628,6 +633,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "totalTeams",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -708,6 +726,11 @@
       {
         "internalType": "uint256",
         "name": "leadershipScore",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalTeam",
         "type": "uint256"
       }
     ],
