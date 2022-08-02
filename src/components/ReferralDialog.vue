@@ -1,5 +1,5 @@
 <template>
-  <Dialog header="Join Referrer" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
+  <Dialog header="Add Referrer" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
     :style="{ width: '520px' }" contentClass="d-flex flex-column pb-3" dismissableMask modal>
     <div class="mb-2">
       <strong>Enter Referrer Address: </strong>

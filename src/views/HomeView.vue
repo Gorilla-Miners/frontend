@@ -34,7 +34,7 @@ export default class Home extends CommonMixin {
   }
 
   get referralLink() {
-    return `${this.currentDomain}?ref=${this.user.address}`;
+    return `${this.user.address}`;
   }
 
   copy(content, title) {
@@ -242,10 +242,12 @@ export default class Home extends CommonMixin {
               <div v-if="isWalletConnected" style="display: block" class="mt-5">
                 <h6 class="mb-4 text-uppercase text-pr">Join Referrer Network</h6>
                 <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Referred by someone?</a>
-                <!-- <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75">
+                <h6 class="mt-4 text-uppercase text-pr">Refer Someone</h6>
+                <p>Refer someone with your wallet address</p>
+                <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75">
                   <span class="text-truncate mr-4">{{ referralLink }}</span>
                   <span class="ml-auto px-3 copy-btn" @click="copy(`${referralLink}`, 'Referral Link')">COPY</span>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
