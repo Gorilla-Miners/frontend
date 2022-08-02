@@ -17,5 +17,5 @@ export const BASE_BSC_SCAN_URLS = {
 
 export const BASE_BSC_SCAN_URL = BASE_BSC_SCAN_URLS[CHAIN_ID];
 export const DEFAULT_TOKEN_DECIMAL = BIG_TEN.pow(18);
-export const DEFAULT_GAS_LIMIT = 500000;
+export const DEFAULT_GAS_LIMIT = 900000;
 export const REFRESH_CACHED_INTERVAL = 6000
