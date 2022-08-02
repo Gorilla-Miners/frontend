@@ -160,10 +160,10 @@ export default class Home extends CommonMixin {
                       @click="connectWallet()">Connect wallet</a>
                   </div>
                   <div class="hero-right-btn" v-else>
-                    <HarvestAction v-if="userDataLoaded" :stakingData="stakingData" :isLoading="!userDataLoaded" />
+                    <!--<HarvestAction v-if="userDataLoaded" :stakingData="stakingData" :isLoading="!userDataLoaded" />
                     <CardActions v-if="userDataLoaded" :stakingData="stakingData" :stakedBalance="
                       stakingData.userData.amount
-                    " />
+                    " />-->
                   </div>
                 </div>
                 <div class="col-md-6 mt-4 mt-md-0" v-if="userDataLoaded">
