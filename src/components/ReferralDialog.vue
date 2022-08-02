@@ -1,8 +1,8 @@
 <template>
-  <Dialog header="Referrer Someone" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
+  <Dialog header="Join Referrer" v-model:visible="displayDialog" :breakpoints="{ '760px': '62vw', '490px': '90vw' }"
     :style="{ width: '520px' }" contentClass="d-flex flex-column pb-3" dismissableMask modal>
     <div class="mb-2">
-      <strong>Enter Address: </strong>
+      <strong>Enter Referrer Address: </strong>
     </div>
     <div class="token-input2 mb-3">
       <div class="d-flex flex-column align-items-end mt-3">
@@ -47,7 +47,7 @@ export default class ReferralDialog extends mixins(Vue.with(Props), CommonMixin)
     let tx: TxResponse = null;
     try {
       this.pendingTx = true;
-      tx = await onReferUser(this.userAddress, this.user.address);
+      tx = await onReferUser(this.user.address, this.userAddress);
       const receipt = await tx.wait();
       if (receipt?.status) {
         this.$store.commit("useToast", {

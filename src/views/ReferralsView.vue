@@ -119,9 +119,9 @@ export default class Referrals extends CommonMixin {
         <div class="card card-body pt-3 strange-card">
           <div class="icon-container h d-flex justify-content-center"><i
               class="bi bi-link border border-current sq-2 p-2 font-1 mr-2 rounded-circle text-primary"></i><b
-              class="label text-black">My Referral Link</b></div>
+              class="label text-black">Join Referrer Network</b></div>
           <hr class="s-1">
-          <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Refer Someone to earn</a>
+          <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Referred by someone?</a>
         </div>
       </div>
     </div>
