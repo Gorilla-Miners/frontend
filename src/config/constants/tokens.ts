@@ -24,7 +24,7 @@ export const mainnetTokens = defineTokens({
 export const testnetTokens = defineTokens({
   busd: new Token(
     TESTNET,
-    '0x43E28e88A87a538Ea95025E2af9a19AC4160725C',
+    '0x414D348Be1391bd09339FB6F2656A635Aaa93890',
     18,
     'BUSD',
     'Binance USD',
