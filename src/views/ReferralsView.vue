@@ -27,7 +27,7 @@ export default class Referrals extends CommonMixin {
   userDataLoaded: boolean = false;
 
   get referralLink() {
-    return `${this.currentDomain}?ref=${this.user.address}`;
+    return `${this.user.address}`;
   }
 
   copy(content, title) {
