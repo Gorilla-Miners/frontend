@@ -5,6 +5,6 @@ export default {
   },
   staking: {
     97: '0x58D385a55A304D5185AC8f0dB8379e759993dDae',
-    56: '0x6E2cd32465aFAc4DD0D5101b8e6A21E56EFb8198',
+    56: '0xF2A54348Cd56f6CfA78Abce47D77F5dd2072FD29',
   },
 }
