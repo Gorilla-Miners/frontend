@@ -47,6 +47,7 @@ export interface SerializedStaking {
     debt: BigNumber
     totalWithdrawal: BigNumber
     reinvestmentDeadline: string
+    totalTeamSales: string
     lockEndTime: string
     leadershipScore: BigNumber;
     totalReward: BigNumber;

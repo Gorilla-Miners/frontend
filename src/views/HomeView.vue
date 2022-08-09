@@ -7,18 +7,22 @@ import { getStakingAddress } from "@/utils/addressHelpers";
 import { watchEffect } from "vue";
 import { Options } from "vue-class-component";
 import Clock from '@/components/Clock.vue';
+import CountDownClock from '@/components/CountDownClock.vue';
 import CountDown from '@/components/CountDown.vue';
 import BigNumber from "bignumber.js";
 import { getBalanceNumber } from "@/utils/formatBalance";
 import CardActions from "@/components/stakings/actions/CardActions.vue";
 import HarvestAction from "@/components/stakings/actions/HarvestAction.vue";
+import ReferralDialog from "@/components/ReferralDialog.vue";
 
 @Options({
   components: {
     Clock,
+    CountDownClock,
     CardActions,
     CountDown,
-    HarvestAction
+    HarvestAction,
+    ReferralDialog,
   },
 })
 export default class Home extends CommonMixin {
@@ -32,7 +36,7 @@ export default class Home extends CommonMixin {
   }
 
   get referralLink() {
-    return `${this.currentDomain}?ref=${this.user.address}`;
+    return `${this.user.address}`;
   }
 
   copy(content, title) {
@@ -94,6 +98,10 @@ export default class Home extends CommonMixin {
     return getBalanceNumber(val, decimal);
   }
 
+  onPresentAddReferral() {
+    this.emitter.emit("shouldDisplayReferralDialog", true);
+  }
+
   mounted() {
     useStakingPageFetch();
     watchEffect(() => {
@@ -106,6 +114,7 @@ export default class Home extends CommonMixin {
 </script>
 
 <template>
+  <ReferralDialog />
   <!-- Hero Section Start -->
   <div class="hero-main layout-3 white-sec" style="background-image:url('images/banner.jpg');">
     <div id="gold-tech-bg"></div>
@@ -131,16 +140,16 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main mt-4 mt-md-0" v-if="stakingData">
                     <div class="rang-slider-toltip">
                       <span>Number of participates <strong>{{
-                      stakingData.totalParticipants
-                      }}</strong></span>
+                          stakingData.totalParticipants
+                          }}</strong></span>
                       <span>Total Payout<strong>${{ getFormattedBalance(getBalanceNumber(stakingData.totalPayouts,
-                      18))
-                      }}</strong></span>
+                          18))
+                          }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
                       <span v-if="stakingData.totalInvestments">Total BUSD in Contract <strong style=" font-size:
                         30px">${{ getFormattedBalance(getBalanceNumber(stakingData.contractBalance, 18))
-                        }}</strong></span>
+                          }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>
@@ -154,16 +163,33 @@ export default class Home extends CommonMixin {
             <div class="pre-sale-timer style-2" style="display: block">
               <div class="row align-items-center">
                 <div class="col-md-6">
+                  <h3>Mining Starts In:</h3>
+                  <CountDownClock countDownEndTime="1660647600" />
+
+                </div>
+                <div class="col-md-6 mt-4 mt-md-0">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
+          <div class="pre-sale-timer-outer">
+            <div class="pre-sale-timer style-2" style="display: block">
+              <div class="row align-items-center">
+                <div class="col-md-6">
                   <h3>Start Mining <span>BUSD!</span></h3>
                   <div id="clock" data-date="2021/12/31"></div>
                   <div class="hero-right-btn" v-if="!isWalletConnected"><a class="btn btn4" href="javascript:void(0)"
                       @click="connectWallet()">Connect wallet</a>
                   </div>
                   <div class="hero-right-btn" v-else>
-                    <!--<HarvestAction v-if="userDataLoaded" :stakingData="stakingData" :isLoading="!userDataLoaded" />
+                    <HarvestAction v-if="userDataLoaded && stakingData.userData.amount.gt(0)" :stakingData="stakingData"
+                      :isLoading="!userDataLoaded" />
                     <CardActions v-if="userDataLoaded" :stakingData="stakingData" :stakedBalance="
                       stakingData.userData.amount
-                    " />-->
+                    " />
                   </div>
                 </div>
                 <div class="col-md-6 mt-4 mt-md-0" v-if="userDataLoaded">
@@ -210,6 +236,12 @@ export default class Home extends CommonMixin {
                   }} BUSD</span>
                 </div>
                 <div class="d-flex mb-3">
+                  <span class="mr-auto tbl-title">Total Team:</span>
+                  <span class="tbl-content">{{
+                  stakingData.userData.totalTeamSales
+                  }}</span>
+                </div>
+                <div class="d-flex mb-3">
                   <span class="mr-auto tbl-title">Total Team Sales:</span>
                   <span class="tbl-content">{{
                   getFormattedBalance(getBalanceNumber(stakingData.userData.leadershipScore, 18))
@@ -218,7 +250,7 @@ export default class Home extends CommonMixin {
                 <div class="d-flex mb-3">
                   <span class="mr-auto tbl-title">Daily Referral Earnings:</span>
                   <span class="tbl-content">{{
-                    getFormattedBalance(getBalanceNumber(stakingData.userData.referralReward, 18))
+                  getFormattedBalance(getBalanceNumber(stakingData.userData.referralReward, 18))
                   }} BUSD</span>
                 </div>
               </div>
@@ -227,7 +259,10 @@ export default class Home extends CommonMixin {
                 <CountDown :countDownEndTime="stakingData.userData.lockEndTime" />
               </div>
               <div v-if="isWalletConnected" style="display: block" class="mt-5">
-                <h6 class="mb-4 text-uppercase text-pr">Referral Address</h6>
+                <h6 class="mb-4 text-uppercase text-pr">Join Referrer Network</h6>
+                <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Referred by someone?</a>
+                <h6 class="mt-4 text-uppercase text-pr">Refer Someone</h6>
+                <p>Refer someone with your wallet address</p>
                 <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75">
                   <span class="text-truncate mr-4">{{ referralLink }}</span>
                   <span class="ml-auto px-3 copy-btn" @click="copy(`${referralLink}`, 'Referral Link')">COPY</span>
@@ -235,7 +270,7 @@ export default class Home extends CommonMixin {
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -249,11 +284,14 @@ export default class Home extends CommonMixin {
             <h1>About</h1>
             <h3 style="text-align: left;">Why to choose GorillaMiners?</h3>
           </div>
-          <h5 class="accent-color">Gorilla Miners is designed for individuals with long term visions and goals that want
+          <h5 class="accent-color">Gorilla Miners is designed for individuals with long term visions and goals that
+            want
             to achieve great financial sustainability.</h5>
           <p>With our miners that have been systematically designed to give you 3% daily ROI and 90% a month in BUSD
-            (190% including your capital) plus our compounding features that enables you multiply your earnings. This is
-            a great opportunity for anyone who desires to meet their daily and monthly financial target, with a verified
+            (190% including your capital) plus our compounding features that enables you multiply your earnings. This
+            is
+            a great opportunity for anyone who desires to meet their daily and monthly financial target, with a
+            verified
             and well structured platform on the Blockchain . </p>
           <!-- <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ligula ante, auctor et tempor at, scelerisque id nisl. Aliquam ultrices libero a turpis feugiat, pulvinar faucibus libero sodales. Duis condimentum arcu magna.</p> -->
           <a class="btn" href="#">Gorilla Doc</a>

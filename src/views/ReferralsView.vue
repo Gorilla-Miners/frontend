@@ -12,13 +12,14 @@ import BigNumber from "bignumber.js";
 import { getBalanceNumber } from "@/utils/formatBalance";
 import CardActions from "@/components/stakings/actions/CardActions.vue";
 import HarvestAction from "@/components/stakings/actions/HarvestAction.vue";
+import ReferralDialog from "@/components/ReferralDialog.vue";
 
 @Options({
   components: {
     Clock,
     CardActions,
     CountDown,
-    HarvestAction
+    HarvestAction, ReferralDialog,
   },
 })
 export default class Referrals extends CommonMixin {
@@ -26,7 +27,7 @@ export default class Referrals extends CommonMixin {
   userDataLoaded: boolean = false;
 
   get referralLink() {
-    return `${this.currentDomain}?ref=${this.user.address}`;
+    return `${this.user.address}`;
   }
 
   copy(content, title) {
@@ -88,6 +89,10 @@ export default class Referrals extends CommonMixin {
     return earnings;
   }
 
+  onPresentAddReferral() {
+    this.emitter.emit("shouldDisplayReferralDialog", true);
+  }
+
   mounted() {
     useStakingPageFetch();
     watchEffect(() => {
@@ -100,6 +105,7 @@ export default class Referrals extends CommonMixin {
 </script>
 
 <template>
+  <ReferralDialog />
   <!-- Token Sale start -->
   <div class="token-sale p-tb mt-4" id="token">
     <div class="container">
@@ -113,11 +119,15 @@ export default class Referrals extends CommonMixin {
         <div class="card card-body pt-3 strange-card">
           <div class="icon-container h d-flex justify-content-center"><i
               class="bi bi-link border border-current sq-2 p-2 font-1 mr-2 rounded-circle text-primary"></i><b
-              class="label text-black">My Referral Link</b></div>
+              class="label text-black">Join Referrer Network</b></div>
           <hr class="s-1">
-          <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75"><span
-              class="text-truncate mr-4">{{ referralLink }}</span><span class="ml-auto px-3"
-              @click="copy(`${referralLink}`, 'Referral Link')">COPY</span></div>
+          <a @click="onPresentAddReferral" class="btn btn4" href="javascript:void(0)">Referred by someone?</a>
+          <h6 class="mt-4 text-uppercase text-pr">Refer Someone</h6>
+          <p>Refer someone with your wallet address</p>
+          <div class="cover-ref d-flex flex-center small mx-auto my-4 p-3 w-100 w-md-75">
+            <span class="text-truncate mr-4">{{ referralLink }}</span>
+            <span class="ml-auto px-3 copy-btn" @click="copy(`${referralLink}`, 'Referral Link')">COPY</span>
+          </div>
         </div>
       </div>
     </div>
@@ -177,6 +187,18 @@ export default class Referrals extends CommonMixin {
                 <p>{{
                   getFormattedBalance(getBalanceNumber(stakingData.userData.leadershipScore, 18))
                   }} BUSD</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="token-sale-box">
+            <ul>
+              <li>
+                <span>Total Team:</span>
+                <p>{{
+                  stakingData.userData.totalTeamSales
+                  }}</p>
               </li>
             </ul>
           </div>
