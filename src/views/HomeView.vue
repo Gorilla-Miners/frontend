@@ -7,6 +7,7 @@ import { getStakingAddress } from "@/utils/addressHelpers";
 import { watchEffect } from "vue";
 import { Options } from "vue-class-component";
 import Clock from '@/components/Clock.vue';
+import CountDownClock from '@/components/CountDownClock.vue';
 import CountDown from '@/components/CountDown.vue';
 import BigNumber from "bignumber.js";
 import { getBalanceNumber } from "@/utils/formatBalance";
@@ -17,6 +18,7 @@ import ReferralDialog from "@/components/ReferralDialog.vue";
 @Options({
   components: {
     Clock,
+    CountDownClock,
     CardActions,
     CountDown,
     HarvestAction,
@@ -138,16 +140,16 @@ export default class Home extends CommonMixin {
                   <div class="rang-slider-main mt-4 mt-md-0" v-if="stakingData">
                     <div class="rang-slider-toltip">
                       <span>Number of participates <strong>{{
-                      stakingData.totalParticipants
-                      }}</strong></span>
+                          stakingData.totalParticipants
+                          }}</strong></span>
                       <span>Total Payout<strong>${{ getFormattedBalance(getBalanceNumber(stakingData.totalPayouts,
-                      18))
-                      }}</strong></span>
+                          18))
+                          }}</strong></span>
                     </div>
                     <div class="rang-slider-total">
                       <span v-if="stakingData.totalInvestments">Total BUSD in Contract <strong style=" font-size:
                         30px">${{ getFormattedBalance(getBalanceNumber(stakingData.contractBalance, 18))
-                        }}</strong></span>
+                          }}</strong></span>
                       <!-- <div class="rangTotal">91<small>%</small></div> -->
                     </div>
                   </div>
@@ -157,6 +159,22 @@ export default class Home extends CommonMixin {
           </div>
         </div>
         <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
+          <div class="pre-sale-timer-outer">
+            <div class="pre-sale-timer style-2" style="display: block">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h3>Mining Starts In:</h3>
+                  <CountDownClock countDownEndTime="1660647600" />
+
+                </div>
+                <div class="col-md-6 mt-4 mt-md-0">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
           <div class="pre-sale-timer-outer">
             <div class="pre-sale-timer style-2" style="display: block">
               <div class="row align-items-center">
@@ -252,7 +270,7 @@ export default class Home extends CommonMixin {
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
