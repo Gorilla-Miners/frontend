@@ -2,14 +2,14 @@
   <template v-if="needsApproval">
     <ApprovalAction :stakingData="stakingData" :isLoading="isLoading" />
   </template>
-  <StakeActions
+  <!--<StakeActions
     v-else
     :isLoading="isLoading"
     :stakingData="stakingData"
     :stakingTokenBalance="stakingTokenBalance"
     :stakedBalance="stakedBalance"
     :isStaked="isStaked"
-  />
+  />-->
 </template>
 <script lang="ts">
 import { Options, Vue, mixins } from "vue-class-component";

@@ -189,7 +189,7 @@ export default class Home extends CommonMixin {
                       :isLoading="!userDataLoaded" />
                     <CardActions v-if="userDataLoaded" :stakingData="stakingData" :stakedBalance="
                       stakingData.userData.amount
-                    " />
+                    " />-->
                   </div>
                 </div>
                 <div class="col-md-6 mt-4 mt-md-0" v-if="userDataLoaded">
