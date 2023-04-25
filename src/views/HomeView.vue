@@ -174,7 +174,7 @@ export default class Home extends CommonMixin {
             </div>
           </div>
         </div>
-        <!-- <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
+        <div class="col-sm-10 wow fadeIn" style="margin-top: 50px ;" data-wow-delay="0.5s" v-if="stakingData">
           <div class="pre-sale-timer-outer">
             <div class="pre-sale-timer style-2" style="display: block">
               <div class="row align-items-center">
@@ -270,7 +270,7 @@ export default class Home extends CommonMixin {
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
